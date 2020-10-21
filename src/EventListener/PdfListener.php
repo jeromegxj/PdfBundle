@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\Templating\EngineInterface;
+use Twig\Environment;
 
 /**
  * This listener will replace reponse content by pdf document's content if Pdf annotations is found.
@@ -30,15 +30,15 @@ class PdfListener
     private $pdfFacadeBuilder;
     private $annotationReader;
     private $reflectionFactory;
-    private $templatingEngine;
+    private $twig;
     private $cache;
 
-    public function __construct(FacadeBuilder $pdfFacadeBuilder, Reader $annotationReader, Factory $reflectionFactory, EngineInterface $templatingEngine, Cache $cache)
+    public function __construct(FacadeBuilder $pdfFacadeBuilder, Reader $annotationReader, Factory $reflectionFactory, Environment $twig, Cache $cache)
     {
         $this->pdfFacadeBuilder = $pdfFacadeBuilder;
         $this->annotationReader = $annotationReader;
         $this->reflectionFactory = $reflectionFactory;
-        $this->templatingEngine = $templatingEngine;
+        $this->twig = $twig;
         $this->cache = $cache;
     }
 
@@ -76,7 +76,7 @@ class PdfListener
 
         $stylesheetContent = null;
         if ($stylesheet = $annotation->stylesheet) {
-            $stylesheetContent = $this->templatingEngine->render($stylesheet);
+            $stylesheetContent = $this->twig->render($stylesheet);
         }
 
         $content = $this->getPdfContent($annotation, $response, $request, $stylesheetContent);
