@@ -20,7 +20,7 @@
         "doctrine/annotations": "^1|^2",
         "psliwa/php-pdf": "^1.1.5",
         "sensio/framework-extra-bundle": "^2|^3|^4|^5",
-        "symfony/config": "^3.4|^4.0",
+        "symfony/config": "^3.4|^4|^5",
         "symfony/dependency-injection": "^3.4|^4|^5",
         "symfony/event-dispatcher": "^3.4|^4|^5",
         "symfony/framework-bundle": "^3.4|^4|^5",
